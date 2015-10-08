@@ -1,14 +1,14 @@
-# Contributing to Fireball
+# Contributing to <%= projectName %>
 
 First off, thanks for taking the time to contribute!
 
-The following is a set of guidelines for contributing to Fireball and its packages.
+The following is a set of guidelines for contributing to <%= projectName %> and its packages.
 
 ## Coding Style Guide
 
 ### General
 
-- Fireball recommend a tab size of **4** spaces.
+- <%= projectName %> recommend a tab size of **2** spaces.
 - use dash naming rules for files and folders ( e.g. `foo-bar` )
 - use camelCase naming rules for module methods and properties ( e.g. `fooBar` )
 - use CamelCase naming rules for modules ( e.g. `FooBar` )
@@ -22,7 +22,7 @@ The following is a set of guidelines for contributing to Fireball and its packag
 
 ## Submitting Issues
 
-* Include the version of Fireball you are using and the OS.
+* Include the version of <%= projectName %> you are using and the OS.
 * Include screenshots and animated GIFs whenever possible; they are immensely
   helpful.
 * Check the dev tools (`alt-cmd-i`) for errors to include. If the dev tools
@@ -38,12 +38,12 @@ The following is a set of guidelines for contributing to Fireball and its packag
 
 * Include screenshots and animated GIFs in your pull request whenever possible.
 * [JavaScript](https://github.com/styleguide/javascript), and [CSS](https://github.com/styleguide/css) styleguides.
-* Include thoughtfully-worded, well-structured [Mocha](mochajs.org) specs. See [Editor-Framework tests](https://github.com/fireball-x/editor-framework/tree/master/test) for example.
+* Include thoughtfully-worded, well-structured [Mocha](mochajs.org) specs. See [Editor-Framework tests](https://github.com/<%= repo %>/tree/master/test) for example.
 * Document new code with comments in source code based on the [Firedoc User Guide](https://github.com/fireball-x/firedoc/blob/master/GUIDE.md)
 * End files with a newline.
 * Place requires in the following order:
     * Built in Node Modules (such as `path`)
-    * Built in Fireball and Electron Modules (such as `fire-fs`, `shell`)
+    * Built in <%= projectName %> and Electron Modules (such as `fire-fs`, `shell`)
     * Local Modules (using relative paths)
 * Place class properties in the following order:
     * Class methods and properties (methods starting with a `@`)

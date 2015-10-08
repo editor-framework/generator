@@ -55,16 +55,16 @@ module.exports = Yeoman.generators.Base.extend({
 
   writing: {
     app: function () {
-      this.template('_package.json', 'package.json', this.templateData);
-      this.template('_bower.json', 'bower.json', this.templateData);
-      this.template('gulpfile.js', 'gulpfile.js', this.templateData);
+      this.template('package.tmpl.json', 'package.json', this.templateData);
+      this.template('bower.tmpl.json', 'bower.json', this.templateData);
+      this.template('gulpfile.tmpl.js', 'gulpfile.js', this.templateData);
       this.copy('app.js', 'app.js');
     },
 
     utils: function () {
-      this.template('utils/rm-settings.sh', 'utils/rm-settings.sh', this.templateData);
+      this.template('utils/rm-settings.tmpl.sh', 'utils/rm-settings.sh', this.templateData);
 
-      this.template('utils/gulp-tasks/electron-tasks.js', 'utils/gulp-tasks/electron-tasks.js', this.templateData);
+      this.template('utils/gulp-tasks/electron-tasks.tmpl.js', 'utils/gulp-tasks/electron-tasks.js', this.templateData);
       this.copy('utils/gulp-tasks/setup-tasks.js', 'utils/gulp-tasks/setup-tasks.js');
 
       this.copy('utils/libs/check-deps.js', 'utils/libs/check-deps.js');
@@ -77,12 +77,21 @@ module.exports = Yeoman.generators.Base.extend({
       this.copy('utils/git-status.sh', 'utils/git-status.sh');
       this.copy('utils/pre-install-npm.js', 'utils/pre-install-npm.js');
       this.copy('utils/run-tests.js', 'utils/run-tests.js');
+
+      this.copy('utils/res/atom.icns', 'utils/res/atom.icns');
+      this.copy('utils/res/atom.ico', 'utils/res/atom.ico');
     },
 
     config: function () {
       this.copy('config/gitignore', '.gitignore');
       this.copy('config/jshintrc', '.jshintrc');
       this.copy('config/editorconfig', '.editorconfig');
+    },
+
+    misc: function () {
+      this.copy('misc/LICENSE.md', 'LICENSE.md');
+      this.template('misc/CONTRIBUTING.tmpl.md', 'CONTRIBUTING.md', this.templateData);
+      this.template('misc/README.tmpl.md', 'README.md', this.templateData);
     },
 
     // DISABLE

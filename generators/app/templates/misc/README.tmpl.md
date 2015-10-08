@@ -20,7 +20,7 @@ In cloned project folder, run the following command to setup dev environment:
 npm install
 ```
 
-This is all you have to do to set Fireball development environment.
+This is all you have to do to set <%= projectName %> development environment.
 
 ### Run Tasks Manually
 
@@ -61,47 +61,21 @@ You can change this file anytime to choose mirror for Electron downloading again
 
 ## Run
 
-Here are ways to run fireball development version:
+Here are ways to run <%= projectName %> development version:
 
 ```bash
-# Run fireball's dashboard
+# Run <%= projectName %>
 gulp run
 
-# Open Fireball Package Studio
-gulp package-studio
-
-# Open a Fireball project
-gulp fireball --path path/to/project
+# Open <%= projectName %> project
+gulp <%= projectCodeName %> --path path/to/project
 ```
-
-You can run package studio with path parameter like this:
-
-```bash
-# Open Fireball Package Studio with default builtin packages
-gulp package-studio
-
-# Open Fireball Package Studio with all packages in editor-framework/demo loaded
-gulp package-studio --path editor-framework/demo
-
-# Open Fireball Package Studio with a single package editor-framework/demo/grid loaded
-gulp package-studio --path editor-framework/demo/grid
-```
-
-Package Studio will detect the path argument you sent to it, if there is a
-package.json under the path, it will treat your path as a single package, and load
-it after builtin package loaded.
-
-Otherwise, Package Studio will register your path as a package loading path through
-`Editor.registerPackagePath` function, and load any packages under it. This also trigger
-the watch for the path, so any packages you add to this path after Studio opened, will
-be loaded automatically.
-
 ## Update
 
-To get the latest fireball build:
+To get the latest <%= projectName %> build:
 
 ```bash
-# Update fireball from github repo,
+# Update <%= projectName %> from github repo,
 # also update builtin packages and electron binary
 # this command will also check dependencies
 # and report outdated or missing dependencies
@@ -146,10 +120,10 @@ npm run gendoc
 
 ## Feedback & Contribution
 
-- Join our [community on slack](https://fireball-slack.herokuapp.com), then access with http://fireball.slack.com/
-- If you have questions about a specific page of documentation, use the disqus sidebar on the left of [Fireball Documentation Site](http://docs.fireball-x.com).
-- If you have any suggestion/feedback/problem, feel free to [submit an issue](https://github.com/fireball-x/fireball/issues).
-- If you want to contribute to this project, please read [Contributing Guidelines](https://github.com/fireball-x/fireball/blob/master/CONTRIBUTING.md).
+- Join our [community on slack](https://<%= projectCodeName %>-slack.herokuapp.com), then access with http://<%= projectCodeName %>.slack.com/
+- If you have questions about a specific page of documentation, use the disqus sidebar on the left of [<%= projectName %> Documentation Site](http://docs.<%= projectCodeName %>.com).
+- If you have any suggestion/feedback/problem, feel free to [submit an issue](https://github.com/<%= repo %>/issues).
+- If you want to contribute to this project, please read [Contributing Guidelines](https://github.com/<%= repo %>/blob/master/CONTRIBUTING.md).
 
 ## Trouble Shooting
 

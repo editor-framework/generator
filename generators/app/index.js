@@ -26,7 +26,7 @@ module.exports = Yeoman.generators.Base.extend({
         type: 'input',
         name: 'projectName',
         message: 'Your project name',
-        default: this.appname,
+        default: _.kebabCase(this.appname),
       });
     }
 
@@ -59,6 +59,7 @@ module.exports = Yeoman.generators.Base.extend({
       this.template('bower.tmpl.json', 'bower.json', this.templateData);
       this.template('gulpfile.tmpl.js', 'gulpfile.js', this.templateData);
       this.copy('app.js', 'app.js');
+      this.template('index.tmpl.html', 'index.html', this.templateData);
     },
 
     utils: function () {

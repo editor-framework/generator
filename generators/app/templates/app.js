@@ -1,3 +1,5 @@
+var Path = require('fire-path');
+
 //
 global.__app = {
   initCommander: function ( commander ) {

@@ -28,7 +28,7 @@ gulp.task('bootstrap',
 gulp.task('update',
   gulpSequence(
     'setup-branch',
-    'update-<%= projectCodeName %>',
+    'update-<%= projectName %>',
     'update-hosts',
     'update-builtin',
     'clear-builtin-bin',
@@ -78,9 +78,9 @@ gulp.task('run', function(cb) {
   });
 });
 
-gulp.task('<%= projectCodeName %>', function(cb) {
+gulp.task('<%= projectName %>', function(cb) {
     var Commander = require('commander');
-    Commander.option('--path <path>', 'Run open <%= projectCodeName %> project in path')
+    Commander.option('--path <path>', 'Run open <%= projectName %> project in path')
         .parse(process.argv);
 
     var projectPath = Commander.path;
@@ -109,7 +109,7 @@ gulp.task('<%= projectCodeName %>', function(cb) {
 // self
 // =====================================
 
-gulp.task('update-<%= projectCodeName %>', function(cb) {
+gulp.task('update-<%= projectName %>', function(cb) {
   var Async = require('async');
 
   Async.series([

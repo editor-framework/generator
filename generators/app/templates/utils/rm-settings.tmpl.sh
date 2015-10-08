@@ -1,1 +1,1 @@
-rm -rf ~/.<%= projectCodeName %>/*
+rm -rf ~/.<%= projectName %>/*

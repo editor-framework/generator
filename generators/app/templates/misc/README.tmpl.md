@@ -68,7 +68,7 @@ Here are ways to run <%= projectName %> development version:
 gulp run
 
 # Open <%= projectName %> project
-gulp <%= projectCodeName %> --path path/to/project
+gulp <%= projectName %> --path path/to/project
 ```
 ## Update
 
@@ -120,8 +120,8 @@ npm run gendoc
 
 ## Feedback & Contribution
 
-- Join our [community on slack](https://<%= projectCodeName %>-slack.herokuapp.com), then access with http://<%= projectCodeName %>.slack.com/
-- If you have questions about a specific page of documentation, use the disqus sidebar on the left of [<%= projectName %> Documentation Site](http://docs.<%= projectCodeName %>.com).
+- Join our [community on slack](https://<%= projectName %>-slack.herokuapp.com), then access with http://<%= projectName %>.slack.com/
+- If you have questions about a specific page of documentation, use the disqus sidebar on the left of [<%= projectName %> Documentation Site](http://docs.<%= projectName %>.com).
 - If you have any suggestion/feedback/problem, feel free to [submit an issue](https://github.com/<%= repo %>/issues).
 - If you want to contribute to this project, please read [Contributing Guidelines](https://github.com/<%= repo %>/blob/master/CONTRIBUTING.md).
 

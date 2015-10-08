@@ -54,8 +54,8 @@ describe('editor-framework:app', function () {
   });
 
   it('should have the contents we expect', function () {
-    assert.fileContent('package.json', '"name": "Simple App",');
-    assert.fileContent('bower.json', '"name": "Simple App",');
+    assert.fileContent('package.json', '"name": "simple-app",');
+    assert.fileContent('bower.json', '"name": "simple-app",');
     assert.fileContent('gulpfile.js', 'gulp.task(\'simple-app\'');
     assert.fileContent('utils/rm-settings.sh', 'rm -rf ~/.simple-app/*');
   });

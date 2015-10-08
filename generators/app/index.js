@@ -8,6 +8,11 @@ module.exports = Yeoman.generators.Base.extend({
     Yeoman.generators.Base.apply(this,arguments);
 
     this.argument('projectName', { type: String, required: false, desc: 'The project name' });
+
+    this.config.defaults({
+      projectName: _.kebabCase(this.appname),
+      repo: 'organization/' + _.kebabCase(this.appname),
+    });
   },
 
   prompting: function () {
@@ -26,7 +31,7 @@ module.exports = Yeoman.generators.Base.extend({
         type: 'input',
         name: 'projectName',
         message: 'Your project name',
-        default: _.kebabCase(this.appname),
+        default: this.config.get('projectName'),
       });
     }
 
@@ -35,22 +40,29 @@ module.exports = Yeoman.generators.Base.extend({
       type: 'input',
       name: 'repo',
       message: 'Your repo path',
-      default: 'org-name/' + this.appname,
+      default: this.config.get('repo'),
     });
 
     this.prompt(prompts, function (answers) {
       if ( answers.projectName ) {
         this.projectName = answers.projectName;
       }
+      this.projectName = _.kebabCase(this.projectName);
+
+      this.config.set( 'projectName', this.projectName );
+      this.config.set( 'repo', answers.repo );
 
       this.templateData = {
         projectName: this.projectName,
-        projectCodeName: _.kebabCase(this.projectName),
         repo: answers.repo,
       };
 
       done();
     }.bind(this));
+  },
+
+  configuring: function () {
+    this.config.save();
   },
 
   writing: {

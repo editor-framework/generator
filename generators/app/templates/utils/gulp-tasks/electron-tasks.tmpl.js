@@ -94,7 +94,7 @@ gulp.task('rename-electron-mac', ['copy-electron-mac'], function (cb) {
   plistSrc.forEach(function(file) {
     var obj = Plist.parse(Fs.readFileSync(file, 'utf8'));
     obj.CFBundleDisplayName = '<%= projectName%>';
-    obj.CFBundleIdentifier = 'com.<%= projectCodeName%>.www';
+    obj.CFBundleIdentifier = 'com.<%= projectName%>.www';
     obj.CFBundleName = '<%= projectName%>';
     obj.CFBundleExecutable = '<%= projectName%>';
     Fs.writeFileSync(file, Plist.build(obj), 'utf8');

@@ -24,15 +24,14 @@ profile
 *.log
 
 # project files
-node_modules/
-bower_components/
-bin/
-ext/
-builtin/
-apidocs/
 api/
-benchmark/
-package-examples/
+apidocs/
+bin/
+bower_components/
+builtin/
+editor-framework/
+ext/
+node_modules/
 local-setting.json
 
 # test files

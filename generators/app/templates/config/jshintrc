@@ -1,17 +1,17 @@
 {
   "node": true,
   "esnext": true,
-  "bitwise": true,
+  "bitwise": false,
   "camelcase": true,
-  "curly": true,
+  "curly": false,
   "eqeqeq": true,
   "immed": true,
   "indent": 2,
   "latedef": true,
-  "newcap": true,
+  "newcap": false,
   "noarg": true,
   "quotmark": "single",
-  "undef": true,
+  "undef": false,
   "unused": true,
-  "strict": true
+  "strict": false
 }

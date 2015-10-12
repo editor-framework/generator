@@ -11,7 +11,10 @@
   "newcap": false,
   "noarg": true,
   "quotmark": "single",
-  "undef": false,
+  "undef": true,
   "unused": true,
-  "strict": false
+  "strict": false,
+  "predef": [
+    "Editor"
+  ]
 }

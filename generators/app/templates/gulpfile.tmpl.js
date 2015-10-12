@@ -61,49 +61,33 @@ gulp.task('post-install-npm', function(cb) {
 // =====================================
 
 gulp.task('run', function(cb) {
+  var Commander = require('commander');
+  Commander.option('--path <path>', 'Run open <%= projectName %> project in path')
+  .parse(process.argv);
+
+  var projectPath = Commander.path;
+  if (projectPath) {
+    console.log('Load project from %s', projectPath);
+  }
+
   var cmdStr = '';
-  var optArr = [];
+  var args = [];
   if (process.platform === 'win32') {
     cmdStr = 'bin\\electron\\electron.exe';
-    optArr = ['.\\', '--debug=3030', '--dev', '--show-devtools'];
+    args = ['.\\', '--debug=3030', '--dev', '--show-devtools'];
   } else {
     cmdStr = 'bin/electron/Electron.app/Contents/MacOS/Electron';
-    optArr = ['./', '--debug=3030', '--dev', '--show-devtools'];
+    args = ['./', '--debug=3030', '--dev', '--show-devtools'];
   }
-  var child = spawn(cmdStr, optArr, {
-    stdio: 'inherit'
-  });
+
+  if ( projectPath ) {
+    args.push(projectPath);
+  }
+
+  var child = spawn(cmdStr, args, { stdio: 'inherit' });
   child.on('exit', function() {
     cb();
   });
-});
-
-gulp.task('<%= projectName %>', function(cb) {
-    var Commander = require('commander');
-    Commander.option('--path <path>', 'Run open <%= projectName %> project in path')
-        .parse(process.argv);
-
-    var projectPath = Commander.path;
-    if (projectPath) {
-        console.log('Load project from %s', projectPath);
-    }
-
-    var cmdStr = '';
-    var optArr = [];
-    if (process.platform === 'win32') {
-        cmdStr = 'bin\\electron\\electron.exe';
-        optArr = ['.\\', '--debug=3030', '--dev', '--show-devtools', projectPath];
-    } else {
-        cmdStr = 'bin/electron/Electron.app/Contents/MacOS/Electron';
-        optArr = ['./', '--debug=3030', '--dev', '--show-devtools', projectPath];
-    }
-
-    var child = spawn(cmdStr, optArr, {
-        stdio: 'inherit'
-    });
-    child.on('exit', function() {
-        cb();
-    });
 });
 
 // self

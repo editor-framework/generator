@@ -1,3 +1,5 @@
+'use strict';
+
 var Path = require('path');
 var Fs = require('fire-fs');
 var Semver = require('semver');

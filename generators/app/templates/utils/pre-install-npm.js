@@ -1,3 +1,5 @@
+'use strict';
+
 var Fs = require('fs');
 var Npmconf = require('npmconf');
 

@@ -1,3 +1,5 @@
+'use strict';
+
 var Fs = require('fire-fs');
 var Path = require('path');
 var Del = require('del');

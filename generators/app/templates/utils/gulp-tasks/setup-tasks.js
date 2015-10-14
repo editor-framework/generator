@@ -1,3 +1,5 @@
+'use strict';
+
 var Fs = require('fire-fs');
 var Path = require('fire-path');
 var gulp = require('gulp');

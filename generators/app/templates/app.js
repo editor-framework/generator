@@ -1,18 +1,20 @@
-var Path = require('fire-path');
+'use strict';
+
+const Path = require('fire-path');
 
 //
 global.__app = {
-  initCommander: function ( commander ) {
+  initCommander ( commander ) {
     // EXAMPLE:
-    // commander
-    // .usage('[options] <project-path>')
-    // .option('--require-login', 'Require login in dev mode.')
-    // ;
+    commander
+      .usage('[options] <project-path>')
+      .option('--require-login', 'Require login in dev mode.')
+      ;
   },
 
-  init: function ( options, cb ) {
+  init ( options, cb ) {
     // EXAMPLE:
-    // var projectPath;
+    // let projectPath;
     // if ( options.args.length > 0 ) {
     //   projectPath = options.args[0];
     // }
@@ -23,9 +25,9 @@ global.__app = {
     if ( cb ) cb ();
   },
 
-  run: function () {
+  run () {
     // create main window
-    var mainWin = new Editor.Window('main', {
+    let mainWin = new Editor.Window('main', {
       'title': 'Editor Framework',
       'width': 900,
       'height': 700,
@@ -55,12 +57,12 @@ global.__app = {
     mainWin.focus();
   },
 
-  load: function () {
-    // TODO
+  load () {
+    // TODO:
   },
 
-  unload: function () {
-    // TODO
+  unload () {
+    // TODO:
   },
 
   // EXAMPLE: a core-level ipc message

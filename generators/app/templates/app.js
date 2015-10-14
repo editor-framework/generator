@@ -9,6 +9,10 @@ global.__app = {
     commander
       .usage('[options] <project-path>')
       .option('--require-login', 'Require login in dev mode.')
+      .command('foobar').action(() => {
+        console.log('hello foobar!');
+        process.exit(1);
+      })
       ;
   },
 
@@ -71,5 +75,5 @@ global.__app = {
   // },
 };
 
-require('./editor-framework/init');
+require('./editor-framework');
 

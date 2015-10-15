@@ -1,10 +1,11 @@
 'use strict';
 
+require('./editor-framework');
 const Path = require('fire-path');
 
 //
-global.__app = {
-  initCommander ( commander ) {
+Editor.App.extend({
+  beforeInit ( commander ) {
     // EXAMPLE:
     commander
       .usage('[options] <file>')
@@ -60,20 +61,4 @@ global.__app = {
     }
     mainWin.focus();
   },
-
-  load () {
-    // TODO:
-  },
-
-  unload () {
-    // TODO:
-  },
-
-  // EXAMPLE: a core-level ipc message
-  // 'app:say-hello': function () {
-  //   console.log('hello editor-framework');
-  // },
-};
-
-require('./editor-framework');
-
+});

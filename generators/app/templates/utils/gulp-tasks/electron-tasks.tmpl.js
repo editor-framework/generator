@@ -123,14 +123,13 @@ gulp.task('rename-electron-mac', ['copy-electron-mac'], function (cb) {
   });
 });
 
-
 function installElectron (isChina, cb) {
   var cmdstr = process.platform === 'win32' ? 'npm.cmd' : 'npm';
   var tmpenv = process.env;
   if(isChina) {
     tmpenv.ELECTRON_MIRROR = 'http://npm.taobao.org/mirrors/electron/';
   }
-  var child = spawn(cmdstr, ['install', 'nantas/electron-prebuilt'], {
+  var child = spawn(cmdstr, ['install', 'mafintosh/electron-prebuilt'], {
     stdio: 'inherit',
     env: tmpenv
   });

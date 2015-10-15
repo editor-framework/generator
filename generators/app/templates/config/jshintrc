@@ -13,8 +13,20 @@
   "quotmark": "single",
   "undef": true,
   "unused": true,
-  "strict": false,
+  "strict": true,
   "predef": [
-    "Editor"
+    "Editor",
+    "EditorUI",
+    "window",
+    "document",
+    "Polymer",
+    "describe",
+    "it",
+    "before",
+    "beforeAll",
+    "after",
+    "afterAll",
+    "expect",
+    "assert"
   ]
 }

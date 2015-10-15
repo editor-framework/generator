@@ -7,9 +7,9 @@ global.__app = {
   initCommander ( commander ) {
     // EXAMPLE:
     commander
-      .usage('[options] <project-path>')
-      .option('--require-login', 'Require login in dev mode.')
-      .command('foobar').action(() => {
+      .usage('[options] <file>')
+      .option('--foobar', 'A foobar option.')
+      .command('foobar', 'A foobar command').action(() => {
         console.log('hello foobar!');
         process.exit(1);
       })

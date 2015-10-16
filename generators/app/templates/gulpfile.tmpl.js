@@ -339,33 +339,49 @@ gulp.task('npm-rebuild', function(cb) {
 // =====================================
 
 gulp.task('check-hosts-deps', function() {
-  var checkDeps = require('./utils/libs/check-deps');
-  checkDeps(pjson.hosts);
+  var CheckDeps = require('./utils/libs/check-deps');
+  CheckDeps(pjson.hosts);
 });
 
 gulp.task('check-dependencies', function(cb) {
-  var checkdeps = require('check-dependencies');
+  var CheckDeps = require('check-dependencies');
+  var Async = require('async');
+
   console.log(Chalk.cyan('====Checking Dependencies===='));
-  var count = 2;
-  checkdeps({
-    packageManager: 'npm',
-    verbose: true,
-    checkGitUrls: true
-  }, function() {
-    if (--count<=0) {
-      console.log('If you see any version number in ' + Chalk.red('red') + '. Please run ' + Chalk.cyan('"npm install && bower install"') + 'to install missing dependencies');
-      cb();
-    }
-  });
-  checkdeps({
-    packageManager: 'bower',
-    verbose: true,
-    checkGitUrls: true
-  }, function() {
-    if (--count<=0) {
-      console.log('If you see any version number in ' + Chalk.red('red') + '. Please run ' + Chalk.cyan('"npm install && bower install"') + 'to install missing dependencies');
-      cb();
-    }
+
+  function _check ( pkgManager, done ) {
+    CheckDeps({
+      packageManager: pkgManager,
+      verbose: false,
+      checkGitUrls: true
+    }, function (result) {
+      if (result.depsWereOk) {
+        console.log(Chalk.green( pkgManager + ' dependency check complete, everything is ok!'));
+        done();
+        return;
+      }
+
+      var missingPkgs = [];
+      for (var i = 0; i < result.error.length - 1; ++i) {
+        console.log(result.error[i]);
+        var logArr = result.error[i].split(':');
+        missingPkgs.push(logArr[0]);
+      }
+      console.log('Please run ' + Chalk.blue('"' + pkgManager + ' install ' + missingPkgs.join(' ') + '"'));
+      done();
+    });
+  }
+
+  Async.series([
+    function ( next ) {
+      _check('npm', next);
+    },
+
+    function ( next ) {
+      _check('bower', next);
+    },
+  ], function () {
+    cb();
   });
 });
 

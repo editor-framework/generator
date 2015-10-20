@@ -2,30 +2,43 @@
 
 var Path = require('path');
 var Fs = require('fire-fs');
-var Async = require('async');
 var Chalk = require('chalk');
 var Spawn = require('child_process').spawn;
 
 function exec(cmdArgs, path, cb) {
-  console.log('git ' + cmdArgs.join(' ') + ' in ' + path);
+  console.log(
+    Chalk.yellow('git ' + cmdArgs.join(' ')) +
+    ' in ' +
+    Chalk.magenta(path)
+  );
+
   var child = Spawn('git', cmdArgs, {
-    cwd: path
-  });
-  child.stdout.on('data', function(data) {
-    console.log(data.toString());
+    cwd: path,
+    stdio: [0, 1,'pipe'],
   });
   child.stderr.on('data', function(data) {
-    if (data.toString().indexOf('error') !== -1) {
-      console.log('=========error stderr===========');
+    var text = data.toString();
+
+    if (
+      text.indexOf('Aborting') !== -1 ||
+      text.indexOf('fatal') !== -1 ||
+      text.indexOf('error') !== -1
+    ) {
+      process.stderr.write(Chalk.red(text));
+      return;
     }
-    if (data.toString().indexOf('Aborting') !== -1  ||
-        data.toString().indexOf('fatal') !== -1) {
-      console.log(data.toString());
-    process.kill();
-    }
-    console.error(data.toString());
+
+    process.stderr.write(Chalk.green(text));
   });
-  child.on('exit', function () {
+  child.on('exit', function (code) {
+    if ( code !== 0 ) {
+      if ( cb ) {
+        cb ( new Error('Failed to exec git ' + cmdArgs.join(' ')) );
+      }
+
+      return;
+    }
+
     if ( cb ) {
       cb ();
     }
@@ -34,7 +47,7 @@ function exec(cmdArgs, path, cb) {
 
 function clone( remote, path, cb ) {
   if ( Fs.existsSync(Path.join(path, '.git')) ) {
-    console.log(path + ' has already cloned!');
+    console.log(Chalk.green(path + ' has already cloned!'));
     if ( cb ) {
       cb ();
     }
@@ -45,6 +58,7 @@ function clone( remote, path, cb ) {
 }
 
 function pull( repo, remote, branch, cb ) {
+  var Async = require('async');
   Async.series([
     function ( next ) {
       exec(['checkout', branch], repo, next );
@@ -59,14 +73,13 @@ function pull( repo, remote, branch, cb ) {
     },
   ], function ( err ) {
     if ( err ) {
-      console.error(Chalk.red('Failed to update ' + repo + '. Message: ' + err.message ));
       if (cb) {
         cb (err);
       }
       return;
     }
 
-    console.log( repo + ' remote head updated!');
+    console.log(Chalk.green(repo + ' remote head updated!'));
     if (cb) {
       cb ();
     }
@@ -85,7 +98,6 @@ function push( repo, remote, branch, cb ) {
     },
   ], function ( err ) {
     if ( err ) {
-      console.error(Chalk.red('Failed to push ' + repo + '. Message: ' + err.message ));
       if (cb) {
         cb (err);
       }

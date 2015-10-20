@@ -1,3 +1,5 @@
+'use strict';
+
 var Yeoman = require('yeoman-generator');
 var Chalk = require('chalk');
 var Yosay = require('yosay');
@@ -77,8 +79,9 @@ module.exports = Yeoman.generators.Base.extend({
     utils: function () {
       this.template('utils/rm-settings.tmpl.sh', 'utils/rm-settings.sh', this.templateData);
 
-      this.template('utils/gulp-tasks/electron-tasks.tmpl.js', 'utils/gulp-tasks/electron-tasks.js', this.templateData);
+      this.copy('utils/gulp-tasks/electron-tasks.js', 'utils/gulp-tasks/electron-tasks.js');
       this.copy('utils/gulp-tasks/setup-tasks.js', 'utils/gulp-tasks/setup-tasks.js');
+      this.template('utils/gulp-tasks/release-tasks.tmpl.js', 'utils/gulp-tasks/release-tasks.js', this.templateData);
 
       this.copy('utils/libs/check-deps.js', 'utils/libs/check-deps.js');
       this.copy('utils/libs/git.js', 'utils/libs/git.js');

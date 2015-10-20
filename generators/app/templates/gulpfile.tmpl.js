@@ -16,14 +16,15 @@ var spawn = require('child_process').spawn;
 // require tasks
 require('./utils/gulp-tasks/electron-tasks');
 require('./utils/gulp-tasks/setup-tasks');
+require('./utils/gulp-tasks/release-tasks');
 
 // init and update
 // =====================================
 
 gulp.task('bootstrap',
   gulpSequence([
-    'install-hosts',
-    'install-builtin'
+    'update-hosts',
+    'update-builtin'
   ],'update-electron')
 );
 
@@ -107,51 +108,70 @@ gulp.task('update-<%= projectName %>', function(cb) {
 
   ], function ( err ) {
     if ( err ) {
-      throw err;
+      console.log( Chalk.red(err.message));
     }
     cb ();
+  });
+});
+
+// hosts
+// =====================================
+
+gulp.task('update-hosts', ['setup-branch'], function(cb) {
+  var setting = JSON.parse(Fs.readFileSync('local-setting.json'));
+
+  var Async = require('async');
+  Async.eachLimit( pjson.hosts, 5, function ( path, done ) {
+    var name = Path.basename(path);
+
+    // if not exists, git clone it
+    if (!Fs.existsSync(name)) {
+      git.clone('git@github.com:' + path + '.git',
+                name,
+                done);
+      return;
+    }
+
+    // update by git pull
+    var branch = 'master';
+    if ( setting.branch.hosts ) {
+      branch = setting.branch.hosts[name] || 'master';
+    }
+
+    git.pull(name,
+             'git@github.com:' + path + '.git',
+             branch,
+             done);
+  }, function ( err ) {
+    if ( err ) {
+      return cb(err);
+    }
+
+    console.log('Hosts update complete!');
+    return cb();
   });
 });
 
 // builtin
 // =====================================
 
-gulp.task('install-builtin', function(cb) {
-  Fs.ensureDirSync('builtin');
-
-  var Async = require('async');
-  Async.eachLimit( pjson.builtins, 5, function ( path, done ) {
-    var name = Path.basename(path);
-    git.clone('git@github.com:' + path + '.git',
-              Path.join('builtin', name),
-              done);
-  }, function ( err ) {
-    if ( err ) {
-      throw err;
-    }
-
-    console.log('Builtin packages installation complete!');
-    cb();
-  });
-});
-
 gulp.task('update-builtin', ['setup-branch'], function(cb) {
+  Fs.ensureDirSync('builtin');
   var setting = JSON.parse(Fs.readFileSync('local-setting.json'));
 
-  if ( !Fs.isDirSync('builtin') ) {
-    console.error(Chalk.red('Builtin folder not initialized, please run "gulp install-builtin" first!'));
-    return cb();
-  }
-
   var Async = require('async');
   Async.eachLimit( pjson.builtins, 5, function ( path, done ) {
     var name = Path.basename(path);
-    if ( !Fs.existsSync(Path.join('builtin', name, '.git')) ) {
-      console.error(Chalk.red('Builtin package ' + name + ' not initialized, please run "gulp install-builtin" first!'));
-      process.exit(1);
+
+    // if not exists, git clone it
+    if (!Fs.existsSync(Path.join('builtin', name))) {
+      git.clone('git@github.com:' + path + '.git',
+                Path.join('builtin', name),
+                done);
       return;
     }
 
+    // update by git pull
     var branch = 'master';
     if ( setting.branch.builtins ) {
       branch = setting.branch.builtins[name] || 'master';
@@ -163,8 +183,7 @@ gulp.task('update-builtin', ['setup-branch'], function(cb) {
              done);
   }, function ( err ) {
     if ( err ) {
-      process.exit(1);
-      return;
+      return cb(err);
     }
 
     console.log('Builtin packages update complete!');
@@ -185,7 +204,7 @@ gulp.task('clear-builtin-bin', function(cb) {
   console.log('Clean built files for ' + bins);
   Del(bins, function(err) {
     if (err) {
-      throw err;
+      return cb(err);
     }
 
     console.log('Builtin Packages Cleaned! Will be rebuilt when <%= projectName %> launches.');
@@ -208,7 +227,7 @@ gulp.task('prune-builtin', function(cb) {
 
   Del( results, function ( err ) {
     if (err) {
-      throw err;
+      return cb(err);
     }
 
     results.forEach( function (name) {
@@ -216,58 +235,6 @@ gulp.task('prune-builtin', function(cb) {
     });
 
     cb();
-  });
-});
-
-// hosts
-// =====================================
-
-gulp.task('install-hosts', function(cb) {
-  var Async = require('async');
-  Async.eachLimit( pjson.hosts, 5, function ( path, done ) {
-    var name = Path.basename(path);
-    git.clone('git@github.com:' + path + '.git',
-              name,
-              done);
-  }, function ( err ) {
-    if ( err ) {
-      throw err;
-    }
-
-    console.log('Hosts installation complete!');
-    cb();
-  });
-});
-
-gulp.task('update-hosts', ['setup-branch'], function(cb) {
-  var setting = JSON.parse(Fs.readFileSync('local-setting.json'));
-
-  var Async = require('async');
-  Async.eachLimit( pjson.hosts, 5, function ( path, done ) {
-    var name = Path.basename(path);
-    if ( !Fs.existsSync(Path.join(name, '.git')) ) {
-      console.error(Chalk.red('Hosts package ' + name + ' not initialized, please run "gulp install-hosts" first!'));
-      process.exit(1);
-      return;
-    }
-
-    var branch = 'master';
-    if ( setting.branch.hosts ) {
-      branch = setting.branch.hosts[name] || 'master';
-    }
-
-    git.pull(name,
-             'git@github.com:' + path + '.git',
-             branch,
-             done);
-  }, function ( err ) {
-    if ( err ) {
-      process.exit(1);
-      return;
-    }
-
-    console.log('Hosts update complete!');
-    return cb();
   });
 });
 
@@ -347,7 +314,7 @@ gulp.task('check-dependencies', function(cb) {
   var CheckDeps = require('check-dependencies');
   var Async = require('async');
 
-  console.log(Chalk.cyan('====Checking Dependencies===='));
+  console.log(Chalk.cyan('===== Checking Dependencies ====='));
 
   function _check ( pkgManager, done ) {
     CheckDeps({
@@ -388,51 +355,25 @@ gulp.task('check-dependencies', function(cb) {
 // distribute
 // =====================================
 
-gulp.task('make-dist-mac', gulpSequence('rename-electron-mac', 'copy-app-dist', 'flatten-modules'));
+gulp.task('make-dist-mac', gulpSequence(
+  'clean-dist',
+  'copy-to-cache',
+  'rename-electron-mac',
+  'copy-app-dist',
+  'copy-src-dist',
+  'npm-deps-dist',
+  'npm-rm-tests',
+  'bower-deps-dist'
+));
 
-gulp.task('make-dist-win', gulpSequence('rename-electron-win', 'copy-app-dist', 'flatten-modules'));
+gulp.task('make-dist-win', gulpSequence(
+  'clean-dist',
+  'copy-to-cache',
+  'rename-electron-win',
+  'copy-app-dist',
+  'copy-src-dist',
+  'npm-deps-dist',
+  'npm-rm-tests',
+  'bower-deps-dist'
+));
 
-gulp.task('copy-app-dist', function() {
-  var destPath = process.platform === 'win32' ? 'dist/resources/app' : 'dist/<%= projectName %>.app/Contents/Resources/app';
-  var src = [
-    'License.md',
-    'apidocs/**/*',
-    'app.js',
-    'bower.json',
-    'bower_components/**/*',
-    'builtin/**/*',
-    'dashboard/**/*',
-    'docs/**/*',
-    'editor/**/*',
-    'package.json',
-    'share/**/*',
-    'test/**/*',
-  ];
-
-  pjson.hosts.forEach(function ( path ) {
-    var name = Path.basename(path);
-    src.push(name + '/**/*');
-  });
-
-  var moduleDeps = Object.keys(pjson.dependencies);
-  src = src.concat(moduleDeps.map(function(module) {
-    return Path.join('node_modules', module, '**/*');
-  }));
-
-  return gulp.src(src, {base: './'})
-    .pipe(gulp.dest(destPath));
-});
-
-gulp.task('flatten-modules', function() {
-  var appLoc = process.platform === 'win32' ? 'dist/resources/app' : 'dist/<%= projectName %>.app/Contents/Resources/app';
-  var flatten = require('flatten-packages');
-  flatten(appLoc, {}, function (err, res) {
-    if (err) {
-      console.error(err);
-    }
-
-    if (res) {
-      return console.log(res);
-    }
-  });
-});

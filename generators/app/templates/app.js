@@ -25,7 +25,7 @@ Editor.App.extend({
     // }
 
     // register package path: ~/.your-app/packages/
-    Editor.registerPackagePath( Path.join(Editor.appHome, 'packages') );
+    Editor.registerPackagePath( Path.join(Editor.App.home, 'packages') );
 
     if ( cb ) cb ();
   },

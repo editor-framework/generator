@@ -8,8 +8,33 @@ var gulp = require('gulp');
 var spawn = require('child_process').spawn;
 var pjson = require('../../package.json');
 
-var cacheDir = Path.join(require('os').tmpDir(), '<%= projectName %>-cache');
+var cachePath = Path.join(require('os').tmpDir(), '<%= projectName %>-cache');
 var appLoc = process.platform === 'win32' ? 'dist/resources/app' : 'dist/<%= projectName %>.app/Contents/Resources/app';
+
+var cachePattern = [
+  '*.js',
+  '*.html',
+  'builtin/**/*',
+  'editor/**/*',
+  'share/**/*',
+  'dashboard/**/*',
+];
+pjson.hosts.forEach(function ( path ) {
+  var name = Path.basename(path);
+  cachePattern.push(name + '/**/*');
+});
+cachePattern = cachePattern.concat([
+  '!**/test',
+  '!**/tests',
+  '!**/test/**/*',
+  '!**/tests/**/*',
+  '!utils/**/*',
+  '!editor-framework/utils/**/*',
+]);
+
+// ==============================
+// tasks
+// ==============================
 
 gulp.task('clean-dist', function(cb) {
   var Del = require('del');
@@ -18,32 +43,18 @@ gulp.task('clean-dist', function(cb) {
 
 gulp.task('clean-cache', function(cb) {
   var Del = require('del');
-  Del(cacheDir, {force: true}, cb);
+  Del(cachePath, {force: true}, cb);
 });
 
 gulp.task('copy-to-cache', ['clean-cache'], function() {
-  var pattern = [
-    'app.js',
-    'builtin/**/*',
-    'editor/**/*',
-    'share/**/*',
-    'dashboard/**/*',
-  ];
+  return gulp.src(cachePattern, {base: './'})
+    .pipe(gulp.dest(cachePath))
+    ;
+});
 
-  pjson.hosts.forEach(function ( path ) {
-    var name = Path.basename(path);
-    pattern.push(name + '/**/*');
-  });
-
-  pattern = pattern.concat([
-    '!**/test',
-    '!**/tests',
-    '!**/test/**/*',
-    '!**/tests/**/*',
-  ]);
-
-  return gulp.src(pattern, {base: './'})
-    .pipe(gulp.dest(cacheDir))
+gulp.task('copy-cache-to-dist', function() {
+	return gulp.src('**/*', {cwd: cachePath})
+    .pipe(gulp.dest(appLoc))
     ;
 });
 
@@ -83,10 +94,12 @@ gulp.task('rename-electron-win', ['copy-electron-win'], function(cb) {
 });
 
 gulp.task('rename-electron-mac', ['copy-electron-mac'], function (cb) {
+  // process plist
   var Plist = require('plist');
-  var Async = require('async');
-
-  var plistSrc = ['dist/<%= projectName %>.app/Contents/Info.plist', 'dist/<%= projectName %>.app/Contents/Frameworks/Electron Helper.app/Contents/Info.plist'];
+  var plistSrc = [
+    'dist/<%= projectName %>.app/Contents/Info.plist',
+    'dist/<%= projectName %>.app/Contents/Frameworks/Electron Helper.app/Contents/Info.plist'
+  ];
   plistSrc.forEach(function(file) {
     var obj = Plist.parse(Fs.readFileSync(file, 'utf8'));
     obj.CFBundleDisplayName = '<%= projectName %>';
@@ -96,7 +109,8 @@ gulp.task('rename-electron-mac', ['copy-electron-mac'], function (cb) {
     Fs.writeFileSync(file, Plist.build(obj), 'utf8');
   });
 
-  var renameSrc = [
+  // rename helper
+  var srcList = [
     'dist/<%= projectName %>.app/Contents/MacOS/Electron',
     'dist/<%= projectName %>.app/Contents/Frameworks/Electron Helper EH.app',
     'dist/<%= projectName %>.app/Contents/Frameworks/Electron Helper NP.app',
@@ -106,18 +120,25 @@ gulp.task('rename-electron-mac', ['copy-electron-mac'], function (cb) {
     'dist/<%= projectName %>.app/Contents/Frameworks/<%= projectName %> Helper.app/Contents/MacOS/Electron Helper',
   ];
 
-  Async.eachSeries( renameSrc, function ( file, done ) {
+  // DISABLE
+  // var spawnSync = require('child_process').spawnSync;
+  // srcList.forEach(function(file) {
+  //   spawnSync('mv', [file, file.replace(/Electron/, 'cocos-runtime-tool')]);
+  // });
+  // cb ();
+
+  var Async = require('async');
+  Async.eachSeries( srcList, function ( file, done ) {
     Fs.move(file, file.replace(/Electron/, '<%= projectName %>'), done);
   }, cb);
 });
 
-gulp.task('copy-app-dist', function() {
+gulp.task('copy-app-to-dist', function() {
   var pattern = [
     'License.md',
     'apidocs/**/*',
     'bower.json',
     'docs/**/*',
-    'index.html',
     'package.json',
   ];
 
@@ -126,13 +147,7 @@ gulp.task('copy-app-dist', function() {
     ;
 });
 
-gulp.task('copy-src-dist', function() {
-	return gulp.src('**/*', {cwd: cacheDir})
-    .pipe(gulp.dest(appLoc))
-    ;
-});
-
-gulp.task('npm-deps-dist', function(cb) {
+gulp.task('npm-install-in-dist', function(cb) {
   var Async = require('async');
 
   Async.series([
@@ -160,7 +175,7 @@ gulp.task('npm-deps-dist', function(cb) {
   });
 });
 
-gulp.task('npm-rm-tests', function(cb) {
+gulp.task('npm-rm-tests-in-dist', function(cb) {
   var Del = require('del');
   Del([
     appLoc + '/node_modules/**/test',
@@ -168,7 +183,7 @@ gulp.task('npm-rm-tests', function(cb) {
   ], cb);
 });
 
-gulp.task('bower-deps-dist', function(cb) {
+gulp.task('bower-install-in-dist', function(cb) {
   var cmdStr = process.platform === 'win32' ? 'bower.cmd' : 'bower';
   var child = spawn(cmdStr, ['install'], {
     cwd: appLoc,

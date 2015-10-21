@@ -69,11 +69,11 @@ module.exports = Yeoman.generators.Base.extend({
 
   writing: {
     app: function () {
-      this.template('package.tmpl.json', 'package.json', this.templateData);
+      this.copy('app.js', 'app.js');
       this.template('bower.tmpl.json', 'bower.json', this.templateData);
       this.template('gulpfile.tmpl.js', 'gulpfile.js', this.templateData);
-      this.copy('app.js', 'app.js');
       this.template('index.tmpl.html', 'index.html', this.templateData);
+      this.template('package.tmpl.json', 'package.json', this.templateData);
     },
 
     utils: function () {
@@ -81,6 +81,7 @@ module.exports = Yeoman.generators.Base.extend({
 
       this.copy('utils/gulp-tasks/electron-tasks.js', 'utils/gulp-tasks/electron-tasks.js');
       this.copy('utils/gulp-tasks/setup-tasks.js', 'utils/gulp-tasks/setup-tasks.js');
+      this.template('utils/gulp-tasks/minimize-tasks.tmpl.js', 'utils/gulp-tasks/minimize-tasks.js', this.templateData);
       this.template('utils/gulp-tasks/release-tasks.tmpl.js', 'utils/gulp-tasks/release-tasks.js', this.templateData);
 
       this.copy('utils/libs/check-deps.js', 'utils/libs/check-deps.js');
@@ -99,9 +100,9 @@ module.exports = Yeoman.generators.Base.extend({
     },
 
     config: function () {
+      this.copy('config/editorconfig', '.editorconfig');
       this.copy('config/gitignore', '.gitignore');
       this.copy('config/jshintrc', '.jshintrc');
-      this.copy('config/editorconfig', '.editorconfig');
     },
 
     misc: function () {

@@ -20,9 +20,12 @@ describe('editor-framework:app', function () {
       'package.json',
       'gulpfile.js',
       'app.js',
+      'index.html',
 
       // utils
       'utils/gulp-tasks/electron-tasks.js',
+      'utils/gulp-tasks/minimize-tasks.js',
+      'utils/gulp-tasks/release-tasks.js',
       'utils/gulp-tasks/setup-tasks.js',
 
       'utils/libs/check-deps.js',

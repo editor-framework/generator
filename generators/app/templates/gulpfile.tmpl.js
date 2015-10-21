@@ -17,6 +17,7 @@ var spawn = require('child_process').spawn;
 require('./utils/gulp-tasks/electron-tasks');
 require('./utils/gulp-tasks/setup-tasks');
 require('./utils/gulp-tasks/release-tasks');
+require('./utils/gulp-tasks/minimize-tasks');
 
 // init and update
 // =====================================
@@ -357,23 +358,45 @@ gulp.task('check-dependencies', function(cb) {
 
 gulp.task('make-dist-mac', gulpSequence(
   'clean-dist',
-  'copy-to-cache',
   'rename-electron-mac',
-  'copy-app-dist',
-  'copy-src-dist',
-  'npm-deps-dist',
-  'npm-rm-tests',
-  'bower-deps-dist'
+  'copy-app-to-dist',
+  'copy-to-cache',
+  'copy-cache-to-dist',
+  'npm-install-in-dist',
+  'npm-rm-tests-in-dist',
+  'bower-install-in-dist'
 ));
 
 gulp.task('make-dist-win', gulpSequence(
   'clean-dist',
-  'copy-to-cache',
   'rename-electron-win',
-  'copy-app-dist',
-  'copy-src-dist',
-  'npm-deps-dist',
-  'npm-rm-tests',
-  'bower-deps-dist'
+  'copy-app-to-dist',
+  'copy-to-cache',
+  'copy-cache-to-dist',
+  'npm-install-in-dist',
+  'npm-rm-tests-in-dist',
+  'bower-install-in-dist'
+));
+
+gulp.task('make-dist-mac-min', gulpSequence(
+  'clean-dist',
+  'rename-electron-mac',
+  'copy-app-to-dist',
+  'minify-source-in-cache',
+  'copy-cache-to-dist',
+  'npm-install-in-dist',
+  'npm-rm-tests-in-dist',
+  'bower-install-in-dist'
+));
+
+gulp.task('make-dist-win-min', gulpSequence(
+  'clean-dist',
+  'rename-electron-win',
+  'copy-app-to-dist',
+  'minify-source-in-cache',
+  'copy-cache-to-dist',
+  'npm-install-in-dist',
+  'npm-rm-tests-in-dist',
+  'bower-install-in-dist'
 ));
 

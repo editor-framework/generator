@@ -4,20 +4,20 @@ export ORIGINAL_PATH=`pwd`
 
 for name in builtin/* *
 do
-    if [ -d "${name}/.git" ]; then
-        echo ------------------------------------------
-        echo ${name}
-        echo ------------------------------------------
+  if [ -d "${name}/.git" ]; then
+    echo ------------------------------------------
+    echo ${name}
+    echo ------------------------------------------
 
-        cd ${name}
+    cd ${name}
 
-        # check if we have uncommit changes
-        result=$(git cherry -v)
-        if [ ! "${result}" == "" ]; then
-            git push $@
-        fi
-
-        cd ${ORIGINAL_PATH}
-        echo
+    # check if we have uncommit changes
+    result=$(git cherry -v)
+    if [ ! "${result}" == "" ]; then
+      git push $@
     fi
+
+    cd ${ORIGINAL_PATH}
+    echo
+  fi
 done

@@ -3,18 +3,19 @@ export ORIGINAL_PATH=`pwd`
 
 for name in builtin/* *
 do
-    if [ -d "${name}/.git" ]; then
-        echo ------------------------------------------
-        echo ${name}
-        echo ------------------------------------------
+  if [ -d "${name}/.git" ]; then
+    cd ${name}
+    branch=$(git symbolic-ref --short -q HEAD)
 
-        cd ${name}
+    echo ------------------------------------------
+    echo '\033[0;35m'${name}'\033[0m' - ${branch}
+    echo ------------------------------------------
 
-        # git status -s -b
-        git status -s
-        git cherry -v
+    # git status -s -b
+    git status -s
+    git cherry -v
 
-        cd ${ORIGINAL_PATH}
-        echo
-    fi
+    cd ${ORIGINAL_PATH}
+    echo
+  fi
 done

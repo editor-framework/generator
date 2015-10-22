@@ -14,6 +14,7 @@ module.exports = Yeoman.generators.Base.extend({
     this.config.defaults({
       projectName: _.kebabCase(this.appname),
       repo: 'organization/' + _.kebabCase(this.appname),
+      copyEntryFile: true,
     });
   },
 
@@ -45,6 +46,14 @@ module.exports = Yeoman.generators.Base.extend({
       default: this.config.get('repo'),
     });
 
+    //
+    prompts.push({
+      type: 'confirm',
+      name: 'copyEntryFile',
+      message: 'Generate "app.js" and "index.html" to your project?',
+      default: this.config.get('copyEntryFile'),
+    });
+
     this.prompt(prompts, function (answers) {
       if ( answers.projectName ) {
         this.projectName = answers.projectName;
@@ -53,6 +62,7 @@ module.exports = Yeoman.generators.Base.extend({
 
       this.config.set( 'projectName', this.projectName );
       this.config.set( 'repo', answers.repo );
+      this.config.set( 'copyEntryFile', answers.copyEntryFile );
 
       this.templateData = {
         projectName: this.projectName,
@@ -69,11 +79,14 @@ module.exports = Yeoman.generators.Base.extend({
 
   writing: {
     app: function () {
-      this.copy('app.js', 'app.js');
+      if ( this.config.get('copyEntryFile') ) {
+        this.copy('app.js', 'app.js');
+        this.template('index.tmpl.html', 'index.html', this.templateData);
+      }
+
       this.template('bower.tmpl.json', 'bower.json', this.templateData);
-      this.template('gulpfile.tmpl.js', 'gulpfile.js', this.templateData);
-      this.template('index.tmpl.html', 'index.html', this.templateData);
       this.template('package.tmpl.json', 'package.json', this.templateData);
+      this.template('gulpfile.tmpl.js', 'gulpfile.js', this.templateData);
     },
 
     utils: function () {
@@ -109,6 +122,10 @@ module.exports = Yeoman.generators.Base.extend({
       this.copy('misc/LICENSE.md', 'LICENSE.md');
       this.template('misc/CONTRIBUTING.tmpl.md', 'CONTRIBUTING.md', this.templateData);
       this.template('misc/README.tmpl.md', 'README.md', this.templateData);
+    },
+
+    finish: function () {
+      this.config.save();
     },
 
     // DISABLE

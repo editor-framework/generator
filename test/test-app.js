@@ -10,6 +10,7 @@ describe('editor-framework:app', function () {
       .withPrompts({
         projectName: 'Simple App',
         repo: 'simple/app',
+        copyEntryFile: true,
       })
       .on('end', done);
   });

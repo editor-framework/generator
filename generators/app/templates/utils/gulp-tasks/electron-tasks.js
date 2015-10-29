@@ -52,7 +52,7 @@ function installElectron (isChina, cb) {
   if(isChina) {
     tmpenv.ELECTRON_MIRROR = 'http://npm.taobao.org/mirrors/electron/';
   }
-  var child = spawn(cmdstr, ['install', 'mafintosh/electron-prebuilt'], {
+  var child = spawn(cmdstr, ['install', 'mafintosh/electron-prebuilt#v'+electronVer], {
     stdio: 'inherit',
     env: tmpenv
   });

@@ -261,17 +261,20 @@ function findNativeModulePathRecursive(path) {
 }
 
 gulp.task('npm-rebuild', function(cb) {
+  var os = require('os');
+
   var cmdstr;
   var tmpenv = process.env;
-  var arch;
+  var arch = os.arch();
+
   if (process.platform === 'win32') {
     cmdstr = 'node-gyp.cmd';
     tmpenv.HOME = Path.join(tmpenv.HOMEPATH, '.electron-gyp');
-    arch = 'ia32';
+    // arch = 'ia32';
+    arch = os.arch();
   } else {
     cmdstr = 'node-gyp';
     tmpenv.HOME = Path.join(tmpenv.HOME, '.electron-gyp');
-    var os = require('os');
     arch = os.arch();
   }
   var disturl = 'https://atom.io/download/atom-shell';

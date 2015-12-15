@@ -9,20 +9,14 @@
     "test"
   ],
   "dependencies": {
-    "chai": "3.3.0",
-    "chroma-js": "1.1.1",
     "fontawesome": "4.4.0",
+    "iron-autogrow-textarea": "PolymerElements/iron-autogrow-textarea#^1.0.0",
     "iron-behaviors": "PolymerElements/iron-behaviors#^1.0.0",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.0.0",
     "iron-input": "PolymerElements/iron-input#^1.0.0",
     "iron-selector": "PolymerElements/iron-selector#^1.0.0",
-    "mocha": "2.3.3",
-    "mousetrap": "ccampbell/mousetrap#1.5.3",
-    "numeral": "1.5.3",
     "pace": "1.0.2",
-    "pixi": "3.0.7",
-    "polymer": "Polymer/polymer#^1.1.4",
-    "svg.js": "2.1.1",
+    "polymer": "Polymer/polymer#^1.2.0",
     "web-animations-js": "web-animations/web-animations-js#master"
   },
   "devDependencies": {}

@@ -22,6 +22,7 @@
     "Editor",
     "EditorUI",
     "Helper",
+    "Mousetrap",
     "Polymer",
     "sinon",
     "after",
@@ -33,6 +34,9 @@
     "beforeEach",
     "describe",
     "expect",
-    "it"
+    "it",
+    "cc",
+    "CC_EDITOR",
+    "CC_TEST"
   ]
 }

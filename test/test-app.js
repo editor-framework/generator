@@ -43,6 +43,7 @@ describe('editor-framework:app', function () {
       'utils/pre-install-npm.js',
       'utils/rm-settings.sh',
       'utils/run-tests.js',
+      'utils/run.js',
 
       // configs
       '.gitignore',

@@ -7,42 +7,48 @@
     "preinstall": "npm install npmconf@2.1.2 && node ./utils/pre-install-npm.js",
     "postinstall": "gulp post-install-npm",
     "install": "gulp bootstrap && bower install && gulp npm-rebuild",
-    "test": "node utils/run-tests.js"
+    "test": "node utils/run-tests.js",
+    "start": "node utils/run.js"
   },
   "dependencies": {
     "async": "1.4.2",
-    "chai": "3.3.0",
+    "chai": "3.2.0",
     "chalk": "1.1.1",
-    "chokidar": "1.2.0",
-    "commander": "2.8.1",
+    "chokidar": "1.1.0",
+    "commander": "2.9.0",
     "del": "1.2.1",
-    "diff": "2.1.3",
+    "diff": "2.1.1",
     "fire-fs": "0.2.1",
-    "fire-path": "0.1.8",
+    "fire-path": "0.1.7",
     "fire-url": "0.1.6",
-    "globby": "3.0.1",
+    "globby": "2.1.0",
     "gulp": "3.9.0",
     "gulp-babel": "5.2.1",
     "gulp-less": "3.0.3",
     "gulp-sequence": "0.4.1",
     "gulp-stylus": "2.0.7",
+    "highlight.js": "8.7.0",
     "lodash": "3.10.1",
     "mocha": "2.3.2",
+    "mousetrap": "1.5.3",
+    "node-polyglot": "1.0.0",
+    "numeral": "1.5.3",
+    "os-locale": "1.4.0",
+    "pixi.js": "3.0.8",
     "semver": "5.0.3",
     "sinon": "1.16.1",
+    "svg.js": "2.2.0",
     "winston": "1.0.1"
   },
   "devDependencies": {
     "check-dependencies": "0.10.3",
+    "find-up": "1.0.0",
+    "firedoc": "1.10.0",
     "gulp-changed": "1.3.0",
-    "gulp-htmlmin": "1.2.0",
     "gulp-jshint": "1.11.2",
-    "gulp-minify-css": "1.2.1",
-    "gulp-uglify": "1.4.2",
     "gulp-watch": "4.3.5",
     "jshint-stylish": "2.0.1",
-    "npmconf": "2.1.2",
-    "plist": "1.1.0"
+    "npmconf": "2.1.2"
   },
   "hosts": [
     "fireball-x/editor-framework"
@@ -57,6 +63,6 @@
   "nativeModules": [
     "chokidar"
   ],
-  "electronVersion": "0.34.0",
+  "electronVersion": "0.34.3",
   "main": "app.js"
 }

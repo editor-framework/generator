@@ -24,8 +24,15 @@ Editor.App.extend({
     //   projectPath = options.args[0];
     // }
 
-    // register package path: ~/.your-app/packages/
-    Editor.registerPackagePath( Path.join(Editor.App.home, 'packages') );
+    Editor.init({
+      'profile': {
+        local: Path.join(Editor.App.path, '.settings'),
+      },
+      'package-search-path': [
+        Path.join(Editor.App.home, 'packages')
+      ],
+      'layout': Editor.url('editor-framework://static/layout.json'),
+    });
 
     if ( cb ) cb ();
   },

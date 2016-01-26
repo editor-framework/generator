@@ -4,51 +4,49 @@
   "description": "An editor-framework app.",
   "author": "",
   "scripts": {
-    "preinstall": "npm install npmconf@2.1.2 && node ./utils/pre-install-npm.js",
-    "postinstall": "gulp post-install-npm",
     "install": "gulp bootstrap && bower install && gulp npm-rebuild",
-    "test": "node utils/run-tests.js",
-    "start": "node utils/run.js"
+    "test": "node ./utils/run-tests.js",
+    "start": "node ./utils/run.js",
+    "api": "firedoc build ./ --theme notab"
   },
   "dependencies": {
-    "async": "1.4.2",
-    "chai": "3.2.0",
+    "async": "1.5.2",
+    "chai": "3.4.1",
     "chalk": "1.1.1",
-    "chokidar": "1.1.0",
+    "chokidar": "1.4.2",
     "commander": "2.9.0",
     "del": "1.2.1",
-    "diff": "2.1.1",
-    "fire-fs": "0.2.1",
-    "fire-path": "0.1.7",
-    "fire-url": "0.1.6",
+    "diff": "2.2.1",
+    "find-up": "1.1.0",
+    "fire-fs": "0.2.3",
+    "fire-path": "0.1.8",
+    "fire-url": "0.1.7",
     "globby": "2.1.0",
     "gulp": "3.9.0",
-    "gulp-babel": "5.2.1",
-    "gulp-less": "3.0.3",
-    "gulp-sequence": "0.4.1",
-    "gulp-stylus": "2.0.7",
-    "highlight.js": "8.7.0",
-    "lodash": "3.10.1",
-    "mocha": "2.3.2",
+    "gulp-babel": "6.1.1",
+    "gulp-less": "3.0.5",
+    "gulp-sequence": "0.4.4",
+    "gulp-stylus": "2.2.0",
+    "highlight.js": "9.1.0",
+    "lodash": "4.0.0",
+    "mocha": "2.3.4",
     "mousetrap": "1.5.3",
     "node-polyglot": "1.0.0",
     "numeral": "1.5.3",
     "os-locale": "1.4.0",
-    "pixi.js": "3.0.8",
-    "semver": "5.0.3",
-    "sinon": "1.16.1",
-    "svg.js": "2.2.0",
-    "winston": "1.0.1"
+    "pixi.js": "3.0.9",
+    "semver": "5.1.0",
+    "sinon": "1.17.2",
+    "svg.js": "2.2.5",
+    "winston": "2.1.1"
   },
   "devDependencies": {
-    "check-dependencies": "0.10.3",
-    "find-up": "1.0.0",
-    "firedoc": "1.10.0",
+    "check-dependencies": "0.11.0",
+    "firedoc": "1.13.7",
     "gulp-changed": "1.3.0",
-    "gulp-jshint": "1.11.2",
+    "gulp-jshint": "2.0.0",
     "gulp-watch": "4.3.5",
-    "jshint-stylish": "2.0.1",
-    "npmconf": "2.1.2"
+    "jshint-stylish": "2.1.0"
   },
   "hosts": [
     "fireball-x/editor-framework"
@@ -63,6 +61,6 @@
   "nativeModules": [
     "chokidar"
   ],
-  "electronVersion": "0.34.3",
+  "electronVersion": "0.36.5",
   "main": "app.js"
 }

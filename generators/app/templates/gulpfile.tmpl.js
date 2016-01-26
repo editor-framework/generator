@@ -4,7 +4,6 @@ var Fs = require('fire-fs');
 var Path = require('path');
 var Del = require('del');
 var Chalk = require('chalk');
-var Npmconf = require('npmconf');
 
 var gulp = require('gulp');
 var gulpSequence = require('gulp-sequence');
@@ -41,26 +40,6 @@ gulp.task('update',
   )
 );
 
-gulp.task('pre-install-npm', ['setup-mirror'], function(cb) {
-  var mirror = JSON.parse(Fs.readFileSync('local-setting.json')).mirror;
-  Npmconf.load(function(_, conf) {
-    var registry = Npmconf.defaults.registry;
-    if (mirror === 'china') {
-      registry = 'http://registry.npm.taobao.org/';
-    }
-    conf.set('registry', registry, 'user');
-    conf.save('user', cb);
-  });
-});
-
-gulp.task('post-install-npm', function(cb) {
-  // resume the default config when being installed
-  Npmconf.load(function(_, conf) {
-    conf.set('registry', Npmconf.defaults.registry, 'user');
-    conf.save('user', cb);
-  });
-});
-
 // run
 // =====================================
 
@@ -93,7 +72,7 @@ gulp.task('update-<%= projectName %>', function(cb) {
 
   Async.series([
     function ( next ) {
-      git.exec(['pull', 'git@github.com:<%= repo %>.git', 'master'], './', next);
+      git.exec(['pull', 'https://github.com/cocos-creator/<%= repo %>.git', 'master'], './', next);
     },
 
     function ( next ) {
@@ -127,7 +106,7 @@ gulp.task('update-hosts', ['setup-branch'], function(cb) {
 
     // if not exists, git clone it
     if (!Fs.existsSync(name)) {
-      git.clone('git@github.com:' + path + '.git',
+      git.clone('https://github.com/' + path + '.git',
                 name,
                 done);
       return;
@@ -140,7 +119,7 @@ gulp.task('update-hosts', ['setup-branch'], function(cb) {
     }
 
     git.pull(name,
-             'git@github.com:' + path + '.git',
+             'https://github.com/' + path + '.git',
              branch,
              done);
   }, function ( err ) {
@@ -166,7 +145,7 @@ gulp.task('update-builtin', ['setup-branch'], function(cb) {
 
     // if not exists, git clone it
     if (!Fs.existsSync(Path.join('builtin', name))) {
-      git.clone('git@github.com:' + path + '.git',
+      git.clone('https://github.com/' + path + '.git',
                 Path.join('builtin', name),
                 done);
       return;
@@ -179,7 +158,7 @@ gulp.task('update-builtin', ['setup-branch'], function(cb) {
     }
 
     git.pull(Path.join('builtin', name),
-             'git@github.com:' + path + '.git',
+             'https://github.com/' + path + '.git',
              branch,
              done);
   }, function ( err ) {

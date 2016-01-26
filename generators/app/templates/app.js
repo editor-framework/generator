@@ -34,7 +34,9 @@ Editor.App.extend({
       'layout': Editor.url('editor-framework://static/layout.json'),
     });
 
-    if ( cb ) cb ();
+    if ( cb ) {
+      cb ();
+    }
   },
 
   run () {

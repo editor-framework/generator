@@ -40,7 +40,6 @@ describe('editor-framework:app', function () {
       'utils/git-pull.sh',
       'utils/git-push.sh',
       'utils/git-status.sh',
-      'utils/pre-install-npm.js',
       'utils/rm-settings.sh',
       'utils/run-tests.js',
       'utils/run.js',

@@ -105,7 +105,6 @@ module.exports = Yeoman.generators.Base.extend({
       this.copy('utils/git-pull.sh', 'utils/git-pull.sh');
       this.copy('utils/git-push.sh', 'utils/git-push.sh');
       this.copy('utils/git-status.sh', 'utils/git-status.sh');
-      this.copy('utils/pre-install-npm.js', 'utils/pre-install-npm.js');
       this.copy('utils/run-tests.js', 'utils/run-tests.js');
       this.copy('utils/run.js', 'utils/run.js');
 

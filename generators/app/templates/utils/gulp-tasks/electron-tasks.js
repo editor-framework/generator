@@ -43,7 +43,7 @@ gulp.task('update-electron', function(cb) {
     return;
   }
 
-  gulpSequence('setup-mirror', 'install-electron','electron-to-bin', cb);
+  gulpSequence('setup-mirror', 'install-electron', 'electron-to-bin', cb);
 });
 
 function installElectron (isChina, cb) {

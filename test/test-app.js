@@ -22,32 +22,25 @@ describe('editor-framework:app', function () {
       'gulpfile.js',
       'app.js',
       'index.html',
+      'window.html',
+
+      // tasks
+      'tasks/run-dev.js',
+      'tasks/run-tests.js',
+      'tasks/run.js',
 
       // utils
-      'utils/gulp-tasks/electron-tasks.js',
-      'utils/gulp-tasks/minimize-tasks.js',
-      'utils/gulp-tasks/release-tasks.js',
-      'utils/gulp-tasks/setup-tasks.js',
-
-      'utils/libs/check-deps.js',
       'utils/libs/git.js',
-      'utils/libs/setup-mirror.js',
-
-      'utils/res/atom.icns',
-      'utils/res/atom.ico',
-
       'utils/git-commit.sh',
       'utils/git-pull.sh',
       'utils/git-push.sh',
       'utils/git-status.sh',
       'utils/rm-settings.sh',
-      'utils/run-tests.js',
-      'utils/run.js',
 
       // configs
       '.gitignore',
       '.editorconfig',
-      '.jshintrc',
+      '.eslint.json',
 
       // misc
       'CONTRIBUTING.md',
@@ -59,7 +52,6 @@ describe('editor-framework:app', function () {
   it('should have the contents we expect', function () {
     assert.fileContent('package.json', '"name": "simple-app",');
     assert.fileContent('bower.json', '"name": "simple-app",');
-    assert.fileContent('gulpfile.js', 'gulp.task(\'update-simple-app\'');
     assert.fileContent('utils/rm-settings.sh', 'rm -rf ~/.simple-app/*');
   });
 });

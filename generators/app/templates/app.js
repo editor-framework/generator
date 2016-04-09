@@ -1,17 +1,19 @@
 'use strict';
 
-require('./editor-framework');
+const Editor = require('editor-framework');
 const Path = require('fire-path');
 
 //
 Editor.App.extend({
-  beforeInit ( commander ) {
+  beforeInit ( yargs ) {
     // EXAMPLE:
-    commander
+    yargs
       .usage('[options] <file>')
-      .option('--foobar', 'A foobar option.')
-      .command('foobar', 'A foobar command').action(() => {
+      .option('foo', { type: 'boolean', desc: 'A foo option' }),
+      .command('bar', 'A bar command', yargs => {
         console.log('hello foobar!');
+      }, argv => {
+        // action
         process.exit(1);
       })
       ;
@@ -29,9 +31,9 @@ Editor.App.extend({
         local: Path.join(Editor.App.path, '.settings'),
       },
       'package-search-path': [
-        Path.join(Editor.App.home, 'packages')
+        Editor.url('app://packages/'),
       ],
-      'layout': Editor.url('editor-framework://static/layout.json'),
+      'panel-window': 'app://window.html',
     });
 
     if ( cb ) {

@@ -86,36 +86,31 @@ module.exports = Yeoman.generators.Base.extend({
 
       this.template('bower.tmpl.json', 'bower.json', this.templateData);
       this.template('package.tmpl.json', 'package.json', this.templateData);
-      this.template('gulpfile.tmpl.js', 'gulpfile.js', this.templateData);
+
+      this.copy('window.html', 'window.html');
+      this.copy('gulpfile.js', 'gulpfile.js');
     },
 
     utils: function () {
       this.template('utils/rm-settings.tmpl.sh', 'utils/rm-settings.sh', this.templateData);
 
-      this.copy('utils/gulp-tasks/electron-tasks.js', 'utils/gulp-tasks/electron-tasks.js');
-      this.copy('utils/gulp-tasks/setup-tasks.js', 'utils/gulp-tasks/setup-tasks.js');
-      this.template('utils/gulp-tasks/minimize-tasks.tmpl.js', 'utils/gulp-tasks/minimize-tasks.js', this.templateData);
-      this.template('utils/gulp-tasks/release-tasks.tmpl.js', 'utils/gulp-tasks/release-tasks.js', this.templateData);
-
-      this.copy('utils/libs/check-deps.js', 'utils/libs/check-deps.js');
       this.copy('utils/libs/git.js', 'utils/libs/git.js');
-      this.copy('utils/libs/setup-mirror.js', 'utils/libs/setup-mirror.js');
-
       this.copy('utils/git-commit.sh', 'utils/git-commit.sh');
       this.copy('utils/git-pull.sh', 'utils/git-pull.sh');
       this.copy('utils/git-push.sh', 'utils/git-push.sh');
       this.copy('utils/git-status.sh', 'utils/git-status.sh');
-      this.copy('utils/run-tests.js', 'utils/run-tests.js');
-      this.copy('utils/run.js', 'utils/run.js');
+    },
 
-      this.copy('utils/res/atom.icns', 'utils/res/atom.icns');
-      this.copy('utils/res/atom.ico', 'utils/res/atom.ico');
+    tasks: function () {
+      this.copy('tasks/run-dev.js', 'tasks/run-dev.js');
+      this.copy('tasks/run-tests.js', 'tasks/run-tests.js');
+      this.copy('tasks/run.js', 'tasks/run.js');
     },
 
     config: function () {
       this.copy('config/editorconfig', '.editorconfig');
       this.copy('config/gitignore', '.gitignore');
-      this.copy('config/jshintrc', '.jshintrc');
+      this.copy('config/eslint.json', '.eslint.json');
     },
 
     misc: function () {

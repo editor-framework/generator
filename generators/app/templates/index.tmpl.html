@@ -16,17 +16,23 @@
 
     <script src="app://bower_components/pace/pace.js"></script>
     <link href="app://bower_components/pace/themes/red/pace-theme-center-simple.css" rel="stylesheet">
-    <link rel="import" href="editor-framework://lib/renderer/ui/ui.html">
+
+    <script type="text/javascript" src="app://bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="app://bower_components/polymer/polymer.html">
+    <link rel="import" href="app://bower_components/iron-flex-layout/iron-flex-layout.html">
+    <link rel="stylesheet" href="app://bower_components/fontawesome/css/font-awesome.min.css">
   </head>
 
   <body class="layout vertical">
     <main-dock class="flex-1"></main-dock>
     <script>
+      const DomUtils = Editor.UI.DomUtils;
+
       Pace.once( 'hide', function () {
-        EditorUI.removeLoadingMask();
+        DomUtils.removeLoadingMask();
       });
 
-      EditorUI.addLoadingMask({
+      DomUtils.addLoadingMask({
         background: '#333',
       });
     </script>

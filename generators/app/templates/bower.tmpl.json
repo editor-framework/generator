@@ -17,7 +17,7 @@
     "iron-input": "PolymerElements/iron-input#^1.0.0",
     "iron-selector": "PolymerElements/iron-selector#^1.0.0",
     "pace": "1.0.2",
-    "polymer": "Polymer/polymer#^1.2.0",
+    "polymer": "Polymer/polymer#^1.4.0",
     "web-animations-js": "web-animations/web-animations-js#master"
   },
   "devDependencies": {}

@@ -4,63 +4,56 @@
   "description": "An editor-framework app.",
   "author": "",
   "scripts": {
-    "install": "gulp bootstrap && bower install && gulp npm-rebuild",
-    "test": "node ./utils/run-tests.js",
-    "start": "node ./utils/run.js",
-    "api": "firedoc build ./ --theme notab"
+    "start": "node ./tasks/run-dev.js",
+    "start:no-dev": "node ./tasks/run.js",
+    "test": "node ./tasks/run-tests.js",
+    "clear": "sh ./tasks/remove-settings.sh"
   },
   "dependencies": {
-    "async": "1.5.2",
-    "chai": "3.4.1",
-    "chalk": "1.1.1",
-    "chokidar": "1.4.2",
+    "async": "^1.5.2",
+    "chai": "^3.5.0",
+    "chalk": "^1.1.1",
+    "chokidar": "^1.4.3",
     "commander": "2.9.0",
-    "del": "1.2.1",
+    "del": "^2.2.0",
     "diff": "2.2.1",
     "find-up": "1.1.0",
     "fire-fs": "0.2.3",
     "fire-path": "0.1.8",
     "fire-url": "0.1.7",
-    "globby": "2.1.0",
-    "gulp": "3.9.0",
-    "gulp-babel": "6.1.1",
-    "gulp-less": "3.0.5",
-    "gulp-sequence": "0.4.4",
-    "gulp-stylus": "2.2.0",
+    "globby": "^4.0.0",
     "highlight.js": "9.1.0",
     "lodash": "4.0.0",
-    "mocha": "2.3.4",
+    "mocha": "^2.4.5",
     "mousetrap": "1.5.3",
     "node-polyglot": "1.0.0",
     "numeral": "1.5.3",
     "os-locale": "1.4.0",
     "pixi.js": "3.0.9",
     "semver": "5.1.0",
-    "sinon": "1.17.2",
-    "svg.js": "2.2.5",
-    "winston": "2.1.1"
+    "sinon": "^1.17.3",
+    "svg.js": "^2.2.5",
+    "winston": "^2.2.0",
+    "yargs": "^4.3.1"
   },
   "devDependencies": {
+    "electron-prebuilt": "0.37.5",
     "check-dependencies": "0.11.0",
-    "firedoc": "1.13.7",
-    "gulp-changed": "1.3.0",
-    "gulp-jshint": "2.0.0",
-    "gulp-watch": "4.3.5",
-    "jshint-stylish": "2.1.0"
+    "gulp": "3.9.0",
+    "gulp-babel": "6.1.1",
+    "gulp-less": "3.0.5",
+    "gulp-sequence": "0.4.4",
+    "gulp-stylus": "2.2.0"
   },
-  "hosts": [
-    "fireball-x/editor-framework"
-  ],
-  "builtins": [
-    "fireball-packages/console",
-    "fireball-packages/ipc-debugger",
-    "fireball-packages/package-manager",
-    "fireball-packages/tester",
-    "fireball-packages/ui-kit"
-  ],
-  "nativeModules": [
-    "chokidar"
-  ],
-  "electronVersion": "0.36.5",
+  "hosts": {
+    "fireball-packages/package-examples": "master"
+  },
+  "packages": {
+    "fireball-packages/console": "master",
+    "fireball-packages/ipc-debugger": "master",
+    "fireball-packages/package-manager": "master",
+    "fireball-packages/tester": "master",
+    "fireball-packages/ui-kit": "master"
+  }
   "main": "app.js"
 }

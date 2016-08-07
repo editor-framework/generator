@@ -17,9 +17,7 @@ describe('editor-framework:app', function () {
 
   it('creates files', function () {
     assert.file([
-      'bower.json',
       'package.json',
-      'gulpfile.js',
       'app.js',
       'index.html',
       'window.html',
@@ -51,7 +49,6 @@ describe('editor-framework:app', function () {
 
   it('should have the contents we expect', function () {
     assert.fileContent('package.json', '"name": "simple-app",');
-    assert.fileContent('bower.json', '"name": "simple-app",');
     assert.fileContent('utils/rm-settings.sh', 'rm -rf ~/.simple-app/*');
   });
 });

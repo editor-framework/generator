@@ -1,59 +1,19 @@
 {
   "name": "<%= projectName %>",
-  "version": "0.0.0",
-  "description": "An editor-framework app.",
+  "version": "1.0.0",
+  "description": "An Editor Framework App.",
   "author": "",
   "scripts": {
+    "clear": "sh ./tasks/remove-settings.sh",
     "start": "node ./tasks/run-dev.js",
     "start:no-dev": "node ./tasks/run.js",
-    "test": "node ./tasks/run-tests.js",
-    "clear": "sh ./tasks/remove-settings.sh"
+    "test": "node ./tasks/run-tests.js"
   },
   "dependencies": {
-    "async": "^1.5.2",
-    "chai": "^3.5.0",
-    "chalk": "^1.1.1",
-    "chokidar": "^1.4.3",
-    "commander": "2.9.0",
-    "del": "^2.2.0",
-    "diff": "2.2.1",
-    "find-up": "1.1.0",
-    "fire-fs": "0.2.3",
-    "fire-path": "0.1.8",
-    "fire-url": "0.1.7",
-    "globby": "^4.0.0",
-    "highlight.js": "9.1.0",
-    "lodash": "4.0.0",
-    "mocha": "^2.4.5",
-    "mousetrap": "1.5.3",
-    "node-polyglot": "1.0.0",
-    "numeral": "1.5.3",
-    "os-locale": "1.4.0",
-    "pixi.js": "3.0.9",
-    "semver": "5.1.0",
-    "sinon": "^1.17.3",
-    "svg.js": "^2.2.5",
-    "winston": "^2.2.0",
-    "yargs": "^4.3.1"
+    "electron-prebuilt": "1.x",
+    "editor-Framework": "0.x"
   },
   "devDependencies": {
-    "electron-prebuilt": "0.37.5",
-    "check-dependencies": "0.11.0",
-    "gulp": "3.9.0",
-    "gulp-babel": "6.1.1",
-    "gulp-less": "3.0.5",
-    "gulp-sequence": "0.4.4",
-    "gulp-stylus": "2.2.0"
   },
-  "hosts": {
-    "fireball-packages/package-examples": "master"
-  },
-  "packages": {
-    "fireball-packages/console": "master",
-    "fireball-packages/ipc-debugger": "master",
-    "fireball-packages/package-manager": "master",
-    "fireball-packages/tester": "master",
-    "fireball-packages/ui-kit": "master"
-  }
   "main": "app.js"
 }

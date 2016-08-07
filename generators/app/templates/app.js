@@ -1,34 +1,13 @@
 'use strict';
 
 const Editor = require('editor-framework');
-const Path = require('fire-path');
 
 //
 Editor.App.extend({
-  beforeInit ( yargs ) {
-    // EXAMPLE:
-    yargs
-      .usage('[options] <file>')
-      .option('foo', { type: 'boolean', desc: 'A foo option' }),
-      .command('bar', 'A bar command', yargs => {
-        console.log('hello foobar!');
-      }, argv => {
-        // action
-        process.exit(1);
-      })
-      ;
-  },
-
-  init ( options, cb ) {
-    // EXAMPLE:
-    // let projectPath;
-    // if ( options.args.length > 0 ) {
-    //   projectPath = options.args[0];
-    // }
-
+  init ( opts, cb ) {
     Editor.init({
       'profile': {
-        local: Path.join(Editor.App.path, '.settings'),
+        local: Editor.url('app://.settings'),
       },
       'package-search-path': [
         Editor.url('app://packages/'),

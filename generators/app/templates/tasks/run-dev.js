@@ -4,7 +4,7 @@ const electron = require('electron-prebuilt');
 const spawn = require('child_process').spawn;
 
 let args = [
-  './demo',
+  './',
   '--debug=3030',
   '--dev',
   '--show-devtools'

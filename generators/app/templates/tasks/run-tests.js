@@ -14,12 +14,12 @@ let cwd = process.cwd();
 // get main files
 let mainTests = globby.sync([
   'main/**/*.js', 'share/**/*.js', '!**/*.skip.js'
-], { cwd: './test', realpath: true });
+], { cwd: './', realpath: true });
 
 // get renderer files
 let rendererTests = globby.sync([
   'renderer/**/*.js', 'share/**/*.js', '!**/*.skip.js'
-], { cwd: './test', realpath: true });
+], { cwd: './', realpath: true });
 
 // process tests
 let failedTests = [];
@@ -32,9 +32,9 @@ async.eachSeries([
 
     let args = [];
     if ( info.renderer ) {
-      args = ['./test', 'test', '--renderer', '--reporter', 'spec', file];
+      args = ['./', 'test', '--renderer', '--reporter', 'spec', file];
     } else {
-      args = ['./test', 'test', '--reporter', 'spec', file];
+      args = ['./', 'test', '--reporter', 'spec', file];
     }
 
     let app = spawn(electron, args, {
@@ -71,11 +71,6 @@ async.eachSeries([
   console.log(chalk.red('================================='));
 
   failedTests.forEach(file => {
-    // SpawnSync(
-    //   exePath,
-    //   [cwd, '--test', file, '--reporter', 'spec'],
-    //   {stdio: 'inherit'}
-    // );
     console.log(chalk.red(` - ${file}`));
   });
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 export ORIGINAL_PATH=`pwd`
 
-for name in builtin/* *
+for name in packages/* *
 do
   if [ -d "${name}/.git" ]; then
     cd ${name}

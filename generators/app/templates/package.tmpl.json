@@ -10,7 +10,7 @@
     "test": "node ./tasks/run-tests.js"
   },
   "dependencies": {
-    "electron-prebuilt": "1.x",
+    "electron": "1.x",
     "editor-framework": "0.x"
   },
   "devDependencies": {

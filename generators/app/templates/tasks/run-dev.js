@@ -1,6 +1,6 @@
 'use strict';
 
-const electron = require('electron-prebuilt');
+const electron = require('electron');
 const spawn = require('child_process').spawn;
 
 let args = [

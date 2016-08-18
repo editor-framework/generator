@@ -4,7 +4,7 @@ const path = require('path');
 const chalk = require('chalk');
 const async = require('async');
 
-const electron = require('electron-prebuilt');
+const electron = require('electron');
 const globby = require('globby');
 const spawn = require('child_process').spawn;
 

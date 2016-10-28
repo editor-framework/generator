@@ -80,7 +80,7 @@ module.exports = Yeoman.generators.Base.extend({
   writing: {
     app: function () {
       if ( this.config.get('copyEntryFile') ) {
-        this.copy('app.js', 'app.js');
+        this.template('app.tmpl.js', 'app.js', this.templateData);
         this.template('index.tmpl.html', 'index.html', this.templateData);
       }
 
